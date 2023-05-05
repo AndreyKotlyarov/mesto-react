@@ -1,5 +1,5 @@
 import PopupWithForm from "./PopupWithForm";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 
 export default function AddPlacePopup({ onClose, isOpen, onAddNewPlace }) {
   const inputUrlRef = useRef();
@@ -9,6 +9,12 @@ export default function AddPlacePopup({ onClose, isOpen, onAddNewPlace }) {
     e.preventDefault();
     onAddNewPlace(inputUrlRef.current.value, inputPlaceRef.current.value);
   }
+
+  useEffect(() => {
+    inputUrlRef.current.value = "";
+    inputPlaceRef.current.value = "";
+  }, [isOpen]);
+
   return (
     <PopupWithForm name="add-card" title="Новое место" buttonText="Создать" isOpen={isOpen} onClose={onClose} onSubmit={handleSubmit}>
       <input
